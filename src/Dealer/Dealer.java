@@ -7,6 +7,10 @@ public class Dealer extends Player {
 
     private boolean finalCheck = false;
 
+    public void setFinalCheck(boolean flag){
+        this.finalCheck = flag;
+    }
+
     /**
      *
      * @param card
