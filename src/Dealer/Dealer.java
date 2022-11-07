@@ -2,16 +2,16 @@ package Dealer;
 import Player.Player;
 
 import java.util.Objects;
-
+/** Клас ділєра **/
 public class Dealer extends Player {
 
     private boolean finalCheck = false;
-    public boolean getFinalCheck(){
-        return finalCheck;
-    }
-    public void setFinalCheck(boolean status){
-        finalCheck = status;
-    }
+
+    /**
+     *
+     * @param card
+     * Додає карту ділєру
+     */
     public void addCard(int card){
         int[] cardsCopy = new int[cardsMain.length+1];
         for(int i=0;i<cardsMain.length;i++){
@@ -20,6 +20,10 @@ public class Dealer extends Player {
         cardsCopy[cardsMain.length] = card;
         cardsMain = cardsCopy;
     }
+
+    /**
+     * Друкує інформацію ділєра (Імя, карти , статус гри)
+     */
     public void printInfo(){
         System.out.println("Dealer");
         String cardsStr = "Cards: ";
@@ -44,6 +48,10 @@ public class Dealer extends Player {
         System.out.println(cardsStr);
         System.out.println("--------");
     }
+
+    /**
+     * Видаляє інформацію ділєра
+     */
     public void clearDealerInfo(){
         finalCheck = false;
         cardsMain = new int[0];

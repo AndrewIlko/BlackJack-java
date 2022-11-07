@@ -5,6 +5,9 @@ import Player.Player;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
+
+/** Головний стіл BlackJack**/
+
 public class BlackJack {
 
     Dealer dealer = new Dealer();
@@ -15,18 +18,19 @@ public class BlackJack {
     Scanner option = new Scanner(System.in);
     private int[] cardsInBlackjack = {2,3,4,5,6,7,8,9,10,11};
 
-    public Player[] pushPlayer(Player[] array, Player player){
-        Player[] arrayCopy = new Player[array.length+1];
-        for(int i=0;i<array.length;i++){
-            arrayCopy[i] = array[i];
-        }
-        arrayCopy[arrayCopy.length-1] = player;
-        return arrayCopy;
-    }
 
+
+    /**
+     * Друкує помилку в консоль.
+     */
     private void error(){
         System.out.println("Error! Try again.");
     }
+
+
+    /**
+     * Введення кількості та створення гравців на початку гри
+     */
     public void enterPlayers(){
         boolean flag = false;
         int countOfPlayers = 0;
@@ -58,6 +62,11 @@ public class BlackJack {
         }
         enterBets();
     }
+
+
+    /**
+     * Введення ставки гравця
+     */
     public void enterBets(){
 
         for(int i=0;i<players.length;i++){
@@ -103,6 +112,20 @@ public class BlackJack {
         }
 
     }
+    /**
+     *
+     * @param array
+     * @param player
+     * @return Повертає массив активних гравців включно з параметром player.
+     */
+    public Player[] pushPlayer(Player[] array, Player player){
+        Player[] arrayCopy = new Player[array.length+1];
+        for(int i=0;i<array.length;i++){
+            arrayCopy[i] = array[i];
+        }
+        arrayCopy[arrayCopy.length-1] = player;
+        return arrayCopy;
+    }
 
     private void printCards(){
         dealer.printInfo();
@@ -110,6 +133,14 @@ public class BlackJack {
             activePlayers[i].printInfo();
         }
     }
+
+    /**
+     *
+     * @param type
+     * Залежно від параметра type, робить перевірку карт гравців:
+     * Type = "Blackjack" - перевірка карт на "Blackjack" після роздачі початкових 2 карт
+     * Type = "Final" - перевірка карт враховуючи результат ділєра
+     */
     public void checkCards(String type){
         String Black = "Blackjack";
         for(int i=0;i<activePlayers.length;i++){
@@ -168,6 +199,11 @@ public class BlackJack {
         }
     }
 
+    /**
+     *
+     * @param sum
+     * @return Повертає рядок результату гри залежно від суми ділєра та гравця
+     */
     public String setGameStatus(int sum){
         int dealerSum = dealer.getCardSum("main");
         String result = "";
@@ -192,6 +228,14 @@ public class BlackJack {
         }
         return result;
     }
+
+
+    /**
+     *
+     * @param status - Результат гри
+     * @param bet - Сума ставки
+     * @return Суму, яку гравець або виграв, або програв.
+     */
     public int moneyOutcome(String status,int bet){
         if(Objects.equals(status, "Win")){
             return bet;
@@ -204,6 +248,13 @@ public class BlackJack {
         }
         return 0;
     }
+
+    /**
+     *
+     * @param type
+     * Перевірка карт ділєра на "Blackjack"
+     *
+     */
     public void checkDealerCards(String type){
         String Black = "Blackjack";
         if(Objects.equals(type,"Blackjack")) {
@@ -213,6 +264,10 @@ public class BlackJack {
             }
         }
     }
+
+    /**
+     * Встановлює всім гравцям результат "Поразка"
+     */
     public void setAllDefeat(){
         for(int i=0;i<activePlayers.length;i++){
             Player player = activePlayers[i];
@@ -221,6 +276,10 @@ public class BlackJack {
             }
         }
     }
+
+    /**
+     * Роздача початкових 2 карт гравцям
+     */
     public void dealPlayers(){
         for(int i=0;i<activePlayers.length;i++){
             Player player = activePlayers[i];
@@ -234,7 +293,12 @@ public class BlackJack {
             }
         }
     }
-    public void dealDealer(Dealer dealer){
+
+    /**
+     *
+     * Роздача карт ділєру
+     */
+    public void dealDealer(){
         int sum = dealer.getCardSum("main");
         int number = cardsInBlackjack[rand.nextInt(10)];
         if(number==11 && sum+number>21){
@@ -244,6 +308,10 @@ public class BlackJack {
             dealer.addCard(number);
         }
     }
+
+    /**
+     * Запуск меню для гри
+     */
     public void takeStopSplit(){
         for(int i=0;i<activePlayers.length;i++) {
             Player player = activePlayers[i];
@@ -251,13 +319,21 @@ public class BlackJack {
         }
     }
 
+    /**
+     * Видалення непотрібних даних для подальшої гри
+     */
     public void clearAll(){
         dealer.clearDealerInfo();
         for(int i=0;i<activePlayers.length;i++){
             activePlayers[i].clearAllInfo();
         }
     }
+
+    /**
+     * Початкове меню та внутрішньоігрове меню
+     */
     public void start(){
+
         while (true){
             System.out.println("Choose option: ");
             System.out.println("Enter new players - 1");
@@ -270,8 +346,8 @@ public class BlackJack {
                 dealPlayers();
                 checkCards("Blackjack");
                 printCards();
-                dealDealer(dealer);
-                dealDealer(dealer);
+                dealDealer();
+                dealDealer();
                 checkDealerCards("Blackjack");
                 printCards();
                 if(dealer.getCardSum("main")!=21){
@@ -299,8 +375,8 @@ public class BlackJack {
                 dealPlayers();
                 checkCards("Blackjack");
                 printCards();
-                dealDealer(dealer);
-                dealDealer(dealer);
+                dealDealer();
+                dealDealer();
                 checkDealerCards("Blackjack");
                 printCards();
                 if(dealer.getCardSum("main")!=21){

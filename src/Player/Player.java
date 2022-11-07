@@ -3,6 +3,9 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Objects;
 import java.util.Random;
+
+
+/** Клас гравця **/
 public class Player {
     public int[] cardsMain = new int[0];
     public int[] cardsSplit = new int[0];
@@ -18,34 +21,86 @@ public class Player {
     private int[] cardsInBlackjack = {2,3,4,5,6,7,8,9,10,11};
     Random rand = new Random();
 
+    /**
+     *
+     * @return Повертає флаг, який показує чи "сплітанув" гравець
+     */
     public boolean getSplitFlag(){
         return splitFlag;
     }
+
+    /**
+     *
+     * @param res
+     * Встановлує результат гравця
+     */
     public void setWinStatus(String res){
         winStatus = res;
     }
+
+    /**
+     *
+     * @return Повертає результат гравця
+     */
     public String getWinStatus(){
         return winStatus;
     }
+
+    /**
+     *
+     * @param name
+     * Встановлює імя гравця
+     *
+     */
     public void setName(String name){
         this.name = name;
     }
+    /**
+     *
+     * @return Повертає імя гравця
+     */
     public String getName(){
         return this.name;
     }
+    /**
+     *
+     * @return Повертає баланс гравця
+     */
     public int getBalance(){
         return this.balance;
     }
+
+    /**
+     *
+     * @param num
+     * Встановлує баланс гравця
+     */
     public void setBalance(int num){
         balance+=num;
     }
+    /**
+     *
+     * @param num
+     * Встановлує ставку гравця
+     */
     public void setBet(int num){
         bet = num;
     }
+    /**
+     *
+     * @return Повертає ставку гравця
+     */
     public int getBet(){
         return bet;
     }
 
+    /**
+     *
+     * @param card - карта, яку потрібно додати
+     * @param arrName - назва колоду в яку потрібно додати карту
+     * arrName = "main" - додає до головної колоди
+     * arrName = "split" - додає до другорядної колоди
+     */
     public void addCard(int card,String arrName){
         if(Objects.equals(arrName, "main")){
             int[] cardsCopy = new int[cardsMain.length+1];
@@ -64,6 +119,12 @@ public class Player {
             cardsSplit = cardsCopy;
         }
     }
+
+    /**
+     *
+     * @param arrName - массив, суму якого треба порахувати
+     * @return Повертає суму массива arrName
+     */
     public int getCardSum(String arrName){
         if(Objects.equals(arrName, "main")){
             int sum = 0;
@@ -80,6 +141,10 @@ public class Player {
             return sum;
         }
     }
+
+    /**
+     * Ігрове меню гравця під час гри
+     */
     public void menu(){
         printInfo();
         System.out.println("Choose option: ");
@@ -162,6 +227,10 @@ public class Player {
     }
     //cardsInBlackjack[rand.nextInt(10)];
 
+    /**
+     * Друкує повну інформацію про гравця (Імя, ставку, карти колод та результат)
+     *
+     */
     public void printInfo(){
         System.out.println(name);
         System.out.println("Bet: "+bet);
@@ -200,6 +269,11 @@ public class Player {
         }
         System.out.println("--------");
     }
+
+    /**
+     * Видаляє інформацію гри, яка закінчилась
+     *
+     */
     public void clearAllInfo(){
         this.cardsMain = new int[0];
         this.cardsSplit = new int[0];
